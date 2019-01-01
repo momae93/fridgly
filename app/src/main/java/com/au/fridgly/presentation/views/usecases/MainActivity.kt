@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import com.au.fridgly.R
 import com.au.fridgly.presentation.internal.components.DaggerMainActivityComponent
 import com.au.fridgly.presentation.internal.components.MainActivityComponent
+import com.au.fridgly.presentation.views.usecases.search.FragmentSearch
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -13,10 +14,11 @@ class MainActivity : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_trophy -> {
+            R.id.navigation_search -> {
+                replaceFragment(R.id.activity_main_framelayout_content, FragmentSearch())
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_search -> {
+            R.id.navigation_trophy -> {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorite -> {
@@ -32,6 +34,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         initializeInjection()
+        replaceFragment(R.id.activity_main_framelayout_content, FragmentSearch())
         activity_main_bottomNavigationView_nav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
