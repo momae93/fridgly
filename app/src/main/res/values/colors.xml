@@ -23,7 +23,8 @@
     <color name="colorDeepOrange">#FF5722</color>
     <color name="colorBrown">#795548</color>
     <color name="colorGrey">#9E9E9E</color>
+    <color name="colorLightGrey">#D3D3D3</color>
     <color name="colorBlueGrey">#607D8B</color>
-    <color name="colorWhite">#000000</color>
-    <color name="colorBlack">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
 </resources>
