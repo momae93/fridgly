@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import com.au.fridgly.R
 import com.au.fridgly.presentation.internal.components.DaggerMainActivityComponent
 import com.au.fridgly.presentation.internal.components.MainActivityComponent
+import com.au.fridgly.presentation.views.usecases.favorite.FragmentFavorite
 import com.au.fridgly.presentation.views.usecases.search.FragmentSearch
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorite -> {
+                replaceFragment(R.id.activity_main_framelayout_content, FragmentFavorite())
                 return@OnNavigationItemSelectedListener true
             }
         }
