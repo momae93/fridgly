@@ -1,24 +1,21 @@
-package com.au.fridgly
+package com.au.fridgly.presentation.views.usecases
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
+import com.au.fridgly.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_trophy -> {
-                message.setText(R.string.title_trophy)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_search -> {
-                message.setText(R.string.title_search)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorite -> {
-                message.setText(R.string.title_favorite)
                 return@OnNavigationItemSelectedListener true
             }
         }
