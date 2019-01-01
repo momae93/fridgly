@@ -7,6 +7,7 @@ import com.au.fridgly.presentation.internal.components.DaggerMainActivityCompone
 import com.au.fridgly.presentation.internal.components.MainActivityComponent
 import com.au.fridgly.presentation.views.usecases.favorite.FragmentFavorite
 import com.au.fridgly.presentation.views.usecases.search.FragmentSearch
+import com.au.fridgly.presentation.views.usecases.trophy.FragmentTrophy
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -20,6 +21,7 @@ class MainActivity : BaseActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_trophy -> {
+                replaceFragment(R.id.activity_main_framelayout_content, FragmentTrophy())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_favorite -> {
