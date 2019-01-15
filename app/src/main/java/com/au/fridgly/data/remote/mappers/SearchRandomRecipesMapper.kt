@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class SearchRandomRecipesMapper @Inject constructor() {
     fun transform(elt: RandomRecipesAPI): List<RecipeThumbnail> {
         return elt.list.map {
-            RecipeThumbnail(id = it.id, name = it.name, time = it.time, servings = it.servings, image = it.image)
+            RecipeThumbnail(id = it.id, name = it.name, image = it.image)
         }
     }
 }

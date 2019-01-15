@@ -4,6 +4,7 @@ import com.au.fridgly.presentation.internal.modules.ActivityModule
 import com.au.fridgly.presentation.internal.scopes.PerActivity
 import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearch
 import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearchRandom
+import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearchResults
 import dagger.Component
 
 @PerActivity
@@ -11,4 +12,5 @@ import dagger.Component
 interface MainActivityComponent : ActivityComponent{
     fun inject(fragmentSearch: FragmentSearch)
     fun inject(fragmentSearchRandom: FragmentSearchRandom)
+    fun inject(fragmentSearchResults: FragmentSearchResults)
 }

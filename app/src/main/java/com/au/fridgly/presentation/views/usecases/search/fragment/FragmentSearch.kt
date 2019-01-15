@@ -21,6 +21,7 @@ import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchContract
+import com.au.fridgly.presentation.contracts.search.ISearchResultContract
 import com.au.fridgly.presentation.presenters.usecases.search.SearchPresenter
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailRecyclerAdapter
@@ -56,8 +57,8 @@ class FragmentSearch : Fragment(), ISearchContract.View {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (!query.isBlank())
                 {
-                    val message =  "Searching..."
-                    showToast(message)
+                    val fragmentSearchResults = FragmentSearchResults.newInstance(query)
+                    (activity as MainActivity).replaceFragment(R.id.fragment_search_frameLayout_container, fragmentSearchResults)
                 }
                 else
                 {

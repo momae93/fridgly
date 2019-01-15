@@ -4,13 +4,12 @@ import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.BasePresenter
 import com.au.fridgly.presentation.contracts.BaseView
 
-interface ISearchRandomContract {
+interface ISearchResultContract {
     interface View: BaseView {
-        fun updateMainThumbnail(thumbnail: RecipeThumbnail)
-        fun updateExtraThumbnail(list: List<RecipeThumbnail>)
+        fun updateThumbnails(list: List<RecipeThumbnail>)
     }
 
     interface Presenter: BasePresenter {
-        fun getRandomRecipe(number: Int)
+        fun getSearchRecipes(number: Int, ingredient: String)
     }
 }

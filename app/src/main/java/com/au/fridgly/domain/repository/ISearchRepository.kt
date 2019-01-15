@@ -5,4 +5,5 @@ import io.reactivex.Observable
 
 interface ISearchRepository {
     fun getRandomRecipe(key: String, number: Int): Observable<List<RecipeThumbnail>>
+    fun getSearchRecipe(key: String, number: Int, ingredients: String): Observable<List<RecipeThumbnail>>
 }

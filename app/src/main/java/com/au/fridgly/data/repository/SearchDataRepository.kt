@@ -14,4 +14,8 @@ class SearchDataRepository @Inject constructor(): ISearchRepository {
     override fun getRandomRecipe(key: String, number: Int): Observable<List<RecipeThumbnail>> {
         return remoteDataStore.getRandomRecipes(key, number)
     }
+
+    override fun getSearchRecipe(key: String, number: Int, ingredients: String): Observable<List<RecipeThumbnail>> {
+        return remoteDataStore.getSearchRecipes(key, number, ingredients)
+    }
 }

@@ -4,9 +4,9 @@ import com.au.fridgly.presentation.contracts.BasePresenter
 import com.au.fridgly.presentation.contracts.BaseView
 
 interface ISearchContract {
-    interface View: BaseView<Presenter> {
+    interface View: BaseView {
     }
 
-    interface Presenter: BasePresenter<View> {
+    interface Presenter: BasePresenter {
     }
 }
