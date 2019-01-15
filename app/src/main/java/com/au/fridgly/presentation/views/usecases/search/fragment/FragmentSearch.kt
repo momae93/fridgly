@@ -1,5 +1,6 @@
 package com.au.fridgly.presentation.views.usecases.search.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -29,14 +30,8 @@ import javax.inject.Inject
 
 class FragmentSearch : Fragment(), ISearchContract.View {
 
-    @BindView(R.id.fragment_search_textView_name)
-    lateinit var nameTextView: TextView
-
-    @BindView(R.id.fragment_search_imageView_image)
-    lateinit var pictureImageView: ImageView
-
-    @BindView(R.id.fragment_search_recyclerView_thumbnails)
-    lateinit var thumbnailRecyclerView: RecyclerView
+    @BindView(R.id.fragment_search_searchView_search)
+    lateinit var searchView: SearchView
 
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var presenter: SearchPresenter
@@ -50,11 +45,28 @@ class FragmentSearch : Fragment(), ISearchContract.View {
         ButterKnife.bind(this, view)
 
         (activity as MainActivity).getComponent().inject(this)
+        (activity as MainActivity).replaceFragment(R.id.fragment_search_frameLayout_container, FragmentSearchRandom())
 
-        thumbnailRecyclerView.layoutManager = GridLayoutManager(context, 1, GridLayout.HORIZONTAL, false)
-        thumbnailRecyclerView.setHasFixedSize(true)
+        searchView.setOnQueryTextListener(object : android.support.v7.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                return true
+            }
 
-        presenter.getRandomRecipe(10)
+            @SuppressLint("CheckResult")
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (!query.isBlank())
+                {
+                    val message =  "Searching..."
+                    showToast(message)
+                }
+                else
+                {
+                    val message =  "Oups, avez-vous oublié de saisir un produit ?"
+                    showToast(message)
+                }
+                return true
+            }
+        })
 
         return view
     }
@@ -79,18 +91,6 @@ class FragmentSearch : Fragment(), ISearchContract.View {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
-
-
-    override fun updateMainThumbnail(thumbnail: RecipeThumbnail) {
-        nameTextView.text = thumbnail.name
-        if (!thumbnail.image.isBlank()){
-            Glide.with(activity!!).load(thumbnail.image).into(pictureImageView)
-        }
-    }
-
-    override fun updateExtraThumbnail(list: List<RecipeThumbnail>) {
-        thumbnailRecyclerView.adapter = RecipeThumbnailRecyclerAdapter(list, this)
     }
 
     override fun showToast(message: String) {

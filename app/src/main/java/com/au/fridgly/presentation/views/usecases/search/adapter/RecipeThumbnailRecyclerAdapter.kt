@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchContract
+import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
 import com.au.fridgly.presentation.views.usecases.search.viewholder.RecipeThumbnailViewholder
 import com.bumptech.glide.Glide
 
-class RecipeThumbnailRecyclerAdapter(val list: List<RecipeThumbnail>, val view: ISearchContract.View)
+class RecipeThumbnailRecyclerAdapter(val list: List<RecipeThumbnail>, val view: ISearchRandomContract.View)
     : RecyclerView.Adapter<RecipeThumbnailViewholder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeThumbnailViewholder {
