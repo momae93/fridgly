@@ -1,6 +1,6 @@
 package com.au.fridgly.presentation.contracts
 
-interface BasePresenter<in T> {
+interface BasePresenter {
     fun resume()
 
     fun pause()
