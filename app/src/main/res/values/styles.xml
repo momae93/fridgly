@@ -13,7 +13,7 @@
     <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textColorHint">@color/colorGrey</item>
-        <item name="android:textSize">@dimen/fontSizeBig</item>
+        <item name="android:textSize">@dimen/fontSizeNormal</item>
     </style>
 
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">

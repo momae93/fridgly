@@ -9,7 +9,7 @@ import com.au.fridgly.presentation.internal.modules.NetworkModule
 class AndroidApplication : Application() {
 
     private lateinit var applicationComponent: ApplicationComponent
-    private val BASE_URL = "url"
+    private val BASE_URL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
 
     @Override
     override fun onCreate() {
