@@ -54,12 +54,12 @@
                     android:layout_marginTop="32dp"
                     android:maxLines="2"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_search_random_cardView_container"/>
-            <android.support.v7.widget.RecyclerView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_search_random_textView_other"
-                    android:id="@+id/fragment_search_random_recyclerView_thumbnails"
-                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_search_random_textView_other"
+            android:id="@+id/fragment_search_random_recyclerView_thumbnails"
+    />
 </android.support.constraint.ConstraintLayout>

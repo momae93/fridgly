@@ -4,18 +4,22 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
+import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
 import com.au.fridgly.presentation.presenters.usecases.search.SearchRandomPresenter
+import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailRecyclerAdapter
 import com.bumptech.glide.Glide
 import javax.inject.Inject
@@ -41,6 +45,12 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_search_random, container, false)
+        ButterKnife.bind(this, view)
+        (activity as MainActivity).getComponent().inject(this)
+        thumbnailRecyclerView.layoutManager = GridLayoutManager(context, 1, GridLayout.HORIZONTAL, false)
+        thumbnailRecyclerView.setHasFixedSize(true)
+        this.presenter.getRandomRecipe(10)
+
         return view
     }
 
