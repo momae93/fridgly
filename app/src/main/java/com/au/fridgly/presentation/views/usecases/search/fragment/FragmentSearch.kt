@@ -59,6 +59,7 @@ class FragmentSearch : Fragment(), ISearchContract.View {
                 {
                     val fragmentSearchResults = FragmentSearchResults.newInstance(query)
                     (activity as MainActivity).replaceFragment(R.id.fragment_search_frameLayout_container, fragmentSearchResults)
+                    (activity as MainActivity).closeKeyboard()
                 }
                 else
                 {
