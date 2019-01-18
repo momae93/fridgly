@@ -19,7 +19,9 @@ import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
 import com.au.fridgly.presentation.presenters.usecases.search.SearchRandomPresenter
+import com.au.fridgly.presentation.views.usecases.BaseActivity
 import com.au.fridgly.presentation.views.usecases.MainActivity
+import com.au.fridgly.presentation.views.usecases.recipe.fragment.DialogFragmentRecipe
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailRecyclerAdapter
 import com.bumptech.glide.Glide
 import javax.inject.Inject
@@ -77,9 +79,14 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
     }
 
     override fun updateMainThumbnail(thumbnail: RecipeThumbnail) {
-        nameTextView.text = thumbnail.name
-        if (!thumbnail.image.isBlank()){
-            Glide.with(activity!!).load(thumbnail.image).into(pictureImageView)
+        thumbnail.apply {
+            nameTextView.text = name
+            if (!image.isBlank()){
+                Glide.with(activity!!).load(image).into(pictureImageView)
+                pictureImageView.setOnClickListener {
+                    (activity as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
+                }
+            }
         }
     }
 

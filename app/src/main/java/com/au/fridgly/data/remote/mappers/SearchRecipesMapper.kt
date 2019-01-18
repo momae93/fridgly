@@ -1,6 +1,6 @@
 package com.au.fridgly.data.remote.mappers
 
-import com.au.fridgly.data.remote.models.SearchRecipesAPI
+import com.au.fridgly.data.remote.models.searchRecipe.SearchRecipesAPI
 import com.au.fridgly.domain.models.RecipeThumbnail
 import javax.inject.Inject
 import javax.inject.Singleton

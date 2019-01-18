@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.BaseView
+import com.au.fridgly.presentation.views.usecases.BaseActivity
+import com.au.fridgly.presentation.views.usecases.recipe.fragment.DialogFragmentRecipe
 import com.au.fridgly.presentation.views.usecases.search.viewholder.RecipeThumbnailGridViewHolder
 import com.bumptech.glide.Glide
 
@@ -24,10 +26,14 @@ class RecipeThumbnailGridRecyclerAdapter(val list: List<RecipeThumbnail>, val vi
     }
 
     override fun onBindViewHolder(holder: RecipeThumbnailGridViewHolder, position: Int) {
-        holder.name.text = list[position].name
-        val url = list[position].image
-        if (!url.isBlank()){
-            Glide.with(view.getViewActivity()).load(url).into(holder.image)
+        list[position].apply {
+            holder.name.text = name
+            if (!image.isBlank()){
+                Glide.with(view.getViewActivity()).load(image).into(holder.image)
+                holder.image.setOnClickListener {
+                    (view.getViewActivity() as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
+                }
+            }
         }
     }
 }

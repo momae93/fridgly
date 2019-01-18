@@ -1,4 +1,4 @@
-package com.au.fridgly.data.remote.models
+package com.au.fridgly.data.remote.models.randomRecipe
 
 import com.squareup.moshi.Json
 

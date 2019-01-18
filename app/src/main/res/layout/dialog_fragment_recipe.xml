@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context=".presentation.views.usecases.recipe.fragment.DialogFragmentRecipe">
+
+        <android.support.v7.widget.AppCompatImageButton
+                app:srcCompat="@drawable/ic_arrow_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?android:selectableItemBackground"
+                android:id="@+id/fragment_recipe_button_back" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"/>
+
+
+        <android.support.v7.widget.AppCompatImageButton
+                app:srcCompat="@drawable/ic_heart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?android:selectableItemBackground"
+                android:id="@+id/fragment_recipe_button_favorite" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:scaleType="fitXY"
+                android:id="@+id/fragment_recipe_imageView_image" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_title"/>
+        <TextView
+                android:text="TextView"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="@color/colorBlack"
+                android:inputType="textMultiLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_title" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_button_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:textSize="20sp" android:textStyle="bold"/>
+        <TextView
+                android:text="Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_informations" android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_imageView_image"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="16dp"
+                android:textStyle="bold" android:textSize="20sp" android:textColor="@color/colorBlack"/>
+        <TextView
+                android:text="Servings : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_informations"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp" android:textSize="16sp"
+                android:textColor="@color/colorBlack" android:id="@+id/fragment_recipe_textView_servings_fixed"
+                android:textStyle="bold"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_servings"
+                app:layout_constraintStart_toEndOf="@+id/fragment_recipe_textView_servings_fixed"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="@+id/fragment_recipe_textView_servings_fixed"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_recipe_textView_servings_fixed"
+                app:layout_constraintVertical_bias="1.0" android:textColor="@color/colorBlack"/>
+        <TextView
+                android:text="Ready in :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_ready_fixed" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_servings_fixed"
+                android:textSize="16sp"
+                android:textColor="@color/colorBlack" android:textStyle="bold"/>
+        <TextView
+                android:text="Ingredients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/fragment_recipe_textView_ingredients_fixed"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_preparation_fixed"
+                android:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="32dp"
+                android:textSize="20sp" android:textColor="@color/colorBlack"
+                android:textStyle="bold"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_ready"
+                app:layout_constraintStart_toEndOf="@+id/fragment_recipe_textView_ready_fixed"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="@+id/fragment_recipe_textView_ready_fixed"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_recipe_textView_ready_fixed"
+                app:layout_constraintVertical_bias="1.0" android:textColor="@color/colorBlack"
+                android:layout_marginTop="22dp"/>
+        <TextView
+                android:text="Preparation :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_preparation_fixed"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_ready_fixed" android:textSize="16sp"
+                android:textColor="@color/colorBlack" android:textStyle="bold"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_preparation"
+                app:layout_constraintTop_toTopOf="@+id/fragment_recipe_textView_preparation_fixed"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_recipe_textView_preparation_fixed"
+                app:layout_constraintStart_toEndOf="@+id/fragment_recipe_textView_preparation_fixed"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/colorBlack"/>
+        <TextView
+                android:text="Preparation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/fragment_recipe_textView_instructions_fixed"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_recyclerView_ingredients"
+                android:layout_marginTop="36dp" android:textSize="20sp" android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_ingredients_fixed"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/fragment_recipe_recyclerView_ingredients" android:layout_marginBottom="1dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                app:layout_constraintVertical_bias="0.0"/>
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_recipe_textView_instructions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_recipe_textView_instructions_fixed"
+                android:inputType="textMultiLine"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintHorizontal_bias="0.0"
+                android:textColor="@color/colorBlack"/>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

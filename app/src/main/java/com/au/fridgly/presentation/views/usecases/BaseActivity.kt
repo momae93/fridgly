@@ -2,6 +2,7 @@ package com.au.fridgly.presentation.views.usecases
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentActivity
 import android.view.inputmethod.InputMethodManager
 import com.au.fridgly.presentation.AndroidApplication
@@ -21,19 +22,17 @@ abstract class BaseActivity : FragmentActivity() {
         fragmentTransaction.commit()
     }
 
-    fun addFragment(containerViewId: Int, fragment: android.support.v4.app.Fragment) {
-        val fragmentTransaction = this.supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(containerViewId, fragment)
-        fragmentTransaction.commit()
-    }
-
-
     protected fun getActivityModule(): ActivityModule {
         return ActivityModule(this)
     }
 
     fun getApplicationComponent(): ApplicationComponent {
         return (application as AndroidApplication).getApplicationComponent()
+    }
+
+    fun showDialog(dialogFragment: DialogFragment){
+        dialogFragment.show(this.supportFragmentManager, "DialogProfileTagsAll")
+        this.supportFragmentManager?.executePendingTransactions()
     }
 
     fun closeKeyboard(){

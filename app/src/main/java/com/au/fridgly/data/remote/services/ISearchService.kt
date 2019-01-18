@@ -1,7 +1,8 @@
 package com.au.fridgly.data.remote.services
 
-import com.au.fridgly.data.remote.models.RandomRecipesAPI
-import com.au.fridgly.data.remote.models.SearchRecipesAPI
+import com.au.fridgly.data.remote.models.randomRecipe.RandomRecipesAPI
+import com.au.fridgly.data.remote.models.recipeDetails.RecipeDetailsAPI
+import com.au.fridgly.data.remote.models.searchRecipe.SearchRecipesAPI
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -14,4 +15,8 @@ interface ISearchService {
     fun getSearchRecipes(@Header("X-RapidAPI-Key") key: String,
                          @Query("number") number: Int,
                          @Query("ingredients") ingredients: String): Observable<List<SearchRecipesAPI>>
+
+    @GET("recipes/{idRecipe}/information")
+    fun getRecipeDetailsById(@Header("X-RapidAPI-Key") key: String,
+                  @Path("idRecipe") idRecipe: Int): Observable<RecipeDetailsAPI>
 }

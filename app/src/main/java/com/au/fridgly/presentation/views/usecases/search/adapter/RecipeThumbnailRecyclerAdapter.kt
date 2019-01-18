@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.BaseView
-import com.au.fridgly.presentation.contracts.search.ISearchContract
-import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
+import com.au.fridgly.presentation.views.usecases.BaseActivity
+import com.au.fridgly.presentation.views.usecases.recipe.fragment.DialogFragmentRecipe
 import com.au.fridgly.presentation.views.usecases.search.viewholder.RecipeThumbnailViewholder
 import com.bumptech.glide.Glide
 
@@ -26,10 +26,14 @@ class RecipeThumbnailRecyclerAdapter(val list: List<RecipeThumbnail>, val view: 
     }
 
     override fun onBindViewHolder(holder: RecipeThumbnailViewholder, position: Int) {
-        holder.name.text = list[position].name
-        val url = list[position].image
-        if (!url.isBlank()){
-            Glide.with(view.getViewActivity()).load(url).into(holder.image)
+        list[position].apply {
+            holder.name.text = name
+            if (!image.isBlank()){
+                Glide.with(view.getViewActivity()).load(image).into(holder.image)
+                holder.image.setOnClickListener {
+                    (view.getViewActivity() as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
+                }
+            }
         }
     }
 }
