@@ -1,4 +1,4 @@
-package com.au.fridgly.domain.models
+package com.au.fridgly.domain.models.recipeDetails
 
 data class ExtendedIngredient(val id: Int,
                               val name: String,

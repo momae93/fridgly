@@ -2,7 +2,7 @@ package com.au.fridgly.presentation.presenters.usecases.recipe
 
 import com.au.fridgly.domain.interactors.AbstractObserver
 import com.au.fridgly.domain.interactors.search.GetRecipeDetailsById
-import com.au.fridgly.domain.models.RecipeDetails
+import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.presentation.contracts.recipe.IRecipeDetailsContract
 import javax.inject.Inject
 

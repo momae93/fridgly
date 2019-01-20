@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".presentation.views.usecases.recipe.fragment.DialogFragmentStep">
+
+
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_textView_steps"
+            android:elevation="1dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_step_view_header"
+            app:layout_constraintTop_toTopOf="@+id/fragment_step_view_header"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_step_view_header"
+            app:layout_constraintStart_toStartOf="@+id/fragment_step_view_header"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_textView_instruction" app:layout_constraintStart_toStartOf="parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_textView_instruction_fixed" android:layout_marginTop="8dp"/>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/colorDeepOrange"
+            android:id="@+id/fragment_step_view_header" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+    <TextView
+            android:text="Ingredients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_textView_ingredients_fixed" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_view_header"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp" android:textStyle="bold"
+            android:textSize="20sp" android:textColor="@color/colorBlack"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_textView_ingredients_fixed"
+            android:id="@+id/fragment_step_recyclerView_ingredients"/>
+    <TextView
+            android:text="Equipment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_textView_equipment_fixed" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_recyclerView_ingredients"
+            android:textStyle="bold" android:textColor="@color/colorBlack" android:textSize="20sp"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_textView_equipment_fixed"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/fragment_step_recyclerView_equipment"
+    />
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:id="@+id/fragment_step_group_ingredients"
+                                      app:constraint_referenced_ids="fragment_step_textView_ingredients_fixed,fragment_step_recyclerView_ingredients"/>
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:id="@+id/fragment_step_group_equipment"
+                                      app:constraint_referenced_ids="fragment_step_recyclerView_equipment,fragment_step_textView_equipment_fixed"
+                                      android:visibility="visible"/>
+    <TextView
+            android:text="Instruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_textView_instruction_fixed" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_step_recyclerView_equipment"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp" android:textStyle="bold"
+            android:textSize="20sp" android:textColor="@color/colorBlack"/>
+    <Button
+            android:background="@android:color/transparent"
+            android:text="NEXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_button_next" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_step_view_header"/>
+    <Button
+            android:text="PREVIOUS"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_step_button_previous" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_step_view_header"/>
+</android.support.constraint.ConstraintLayout>

@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.au.fridgly.R
-import com.au.fridgly.domain.models.ExtendedIngredient
+import com.au.fridgly.domain.models.recipeDetails.ExtendedIngredient
 import com.au.fridgly.presentation.contracts.BaseView
 import com.au.fridgly.presentation.views.usecases.recipe.viewholder.RecipeExtendedIngredientViewHolder
 import com.bumptech.glide.Glide

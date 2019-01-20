@@ -1,4 +1,4 @@
-package com.au.fridgly.domain.models
+package com.au.fridgly.domain.models.recipeDetails
 
 data class RecipeDetails(val id: Int,
                          val name: String,
@@ -9,4 +9,5 @@ data class RecipeDetails(val id: Int,
                          val cooking: Int?,
                          val ready: Int,
                          val ingredients: List<ExtendedIngredient>,
+                         val steps: List<Step>?,
                          val likes: Int)

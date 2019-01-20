@@ -11,5 +11,6 @@ data class RecipeDetailsAPI(@Json(name = "id") val id: Int,
                             @Json(name = "cookingMinutes") val cooking: Int?,
                             @Json(name = "readyInMinutes") val ready: Int,
                             @Json(name = "aggregateLikes") val likes: Int,
-                            @Json(name = "extendedIngredients") val ingredients: List<ExtendedIngredientAPI>)
+                            @Json(name = "extendedIngredients") val ingredients: List<ExtendedIngredientAPI>,
+                            @Json(name = "analyzedInstructions") val analyzedInstructions: List<AnalyzedInstructionAPI>?)
 

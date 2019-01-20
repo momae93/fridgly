@@ -3,7 +3,7 @@ package com.au.fridgly.domain.interactors.search
 import com.au.fridgly.domain.executors.PostExecutionThread
 import com.au.fridgly.domain.executors.ThreadExecutor
 import com.au.fridgly.domain.interactors.AbstractUsecase
-import com.au.fridgly.domain.models.RecipeDetails
+import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.domain.repository.ISearchRepository
 import io.reactivex.Observable
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.au.fridgly.domain.repository
 
-import com.au.fridgly.domain.models.RecipeDetails
+import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.domain.models.RecipeThumbnail
 import io.reactivex.Observable
 

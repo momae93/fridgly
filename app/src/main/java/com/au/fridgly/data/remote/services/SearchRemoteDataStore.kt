@@ -4,7 +4,7 @@ import com.au.fridgly.data.datastore.ISearchDatastore
 import com.au.fridgly.data.remote.mappers.RecipeDetailsMapper
 import com.au.fridgly.data.remote.mappers.SearchRandomRecipesMapper
 import com.au.fridgly.data.remote.mappers.SearchRecipesMapper
-import com.au.fridgly.domain.models.RecipeDetails
+import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.domain.models.RecipeThumbnail
 import io.reactivex.Observable
 import retrofit2.Retrofit

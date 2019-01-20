@@ -1,15 +1,16 @@
 package com.au.fridgly.presentation.contracts.recipe
 
-import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.presentation.contracts.BasePresenter
 import com.au.fridgly.presentation.contracts.BaseView
 
-interface IRecipeDetailsContract {
+interface IRecipeStepContract {
     interface View: BaseView {
-        fun updateRecipeDetails(recipe: RecipeDetails)
+        fun updateStepDetails()
+        fun updateNavigationButton()
+        fun nextStep()
+        fun previousStep()
     }
 
     interface Presenter: BasePresenter {
-        fun getRecipeDetails(idRecipe: Int)
     }
 }

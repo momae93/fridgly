@@ -161,5 +161,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="8dp" app:layout_constraintHorizontal_bias="0.0"
                 android:textColor="@color/colorBlack"/>
+        <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" app:srcCompat="@drawable/ic_eyes"
+                android:id="@+id/fragment_recipe_imageButton_steps"
+                android:background="?android:selectableItemBackground"
+                app:layout_constraintTop_toTopOf="@+id/fragment_recipe_textView_instructions_fixed"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_recipe_textView_instructions_fixed"
+                app:layout_constraintStart_toEndOf="@+id/fragment_recipe_textView_instructions_fixed"
+                android:layout_marginStart="16dp" android:visibility="gone"/>
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

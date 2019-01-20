@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,9 +13,12 @@ import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.au.fridgly.R
-import com.au.fridgly.domain.models.RecipeDetails
+import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.presentation.contracts.recipe.IRecipeDetailsContract
+import com.au.fridgly.presentation.models.recipeDetails.StepUI
+import com.au.fridgly.presentation.presenters.helpers.RecipeDetailsMapper
 import com.au.fridgly.presentation.presenters.usecases.recipe.RecipeDetailsPresenter
+import com.au.fridgly.presentation.views.usecases.BaseActivity
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.recipe.adapter.RecipeExtendedIngredientRecylerAdapter
 import com.bumptech.glide.Glide
@@ -52,6 +54,9 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
 
     @BindView(R.id.fragment_recipe_textView_instructions)
     lateinit var instructionsTextView: TextView
+
+    @BindView(R.id.fragment_recipe_imageButton_steps)
+    lateinit var stepImageButton: ImageButton
 
     private lateinit var presenter: RecipeDetailsPresenter
 
@@ -106,6 +111,14 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
         this.readyTextView.text = "${recipe.ready} min"
         this.preparationTextView.text = if (recipe.preparation == null) "N/A" else "${recipe.preparation} min"
         this.instructionsTextView.text = recipe.instructions
+
+        if (recipe.steps != null && recipe.steps.count() > 0){
+            stepImageButton.visibility = View.VISIBLE
+            val steps: List<StepUI> = recipe.steps.map{RecipeDetailsMapper().transform(it)}
+            stepImageButton.setOnClickListener {
+                (activity as BaseActivity).showDialog(DialogFragmentStep.newInstance(ArrayList(steps)))
+            }
+        }
         if (!recipe.image.isBlank()){
             Glide.with(activity!!).load(recipe.image).into(pictureImageView)
         }
