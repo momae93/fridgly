@@ -2,6 +2,7 @@ package com.au.fridgly.presentation.presenters.usecases.favorite
 
 import com.au.fridgly.domain.interactors.AbstractObserver
 import com.au.fridgly.domain.interactors.favorite.GetAllFavoriteRecipes
+import com.au.fridgly.domain.interactors.historical.GetAllHistorical
 import com.au.fridgly.domain.interactors.search.GetRandomRecipes
 import com.au.fridgly.domain.interactors.search.GetSearchRecipes
 import com.au.fridgly.domain.models.RecipeThumbnail
@@ -12,9 +13,12 @@ class FavoritePresenter: IFavoriteContract.Presenter {
 
     private lateinit var view: IFavoriteContract.View
     private var getAllFavoriteRecipes: GetAllFavoriteRecipes
+    private var getAllHistorical: GetAllHistorical
 
-    @Inject constructor(getAllFavoriteRecipes: GetAllFavoriteRecipes){
+    @Inject constructor(getAllFavoriteRecipes: GetAllFavoriteRecipes,
+                        getAllHistorical: GetAllHistorical){
         this.getAllFavoriteRecipes = getAllFavoriteRecipes
+        this.getAllHistorical = getAllHistorical
     }
 
     fun setView(view: IFavoriteContract.View){
@@ -34,6 +38,23 @@ class FavoritePresenter: IFavoriteContract.Presenter {
     }
 
     override fun getRecentRecipes() {
+        val param =  GetAllHistorical
+            .Params(view.getViewActivity().applicationContext)
+        getAllHistorical.execute(HistoricalRecipeObserver(), param)
+    }
+
+    private inner class HistoricalRecipeObserver : AbstractObserver<List<RecipeThumbnail>>() {
+
+        override fun onComplete() {}
+
+        override fun onError(e: Throwable) {
+            val message = "An error occured"
+            this@FavoritePresenter.view.showToast(message)
+        }
+
+        override fun onNext(list: List<RecipeThumbnail>) {
+            this@FavoritePresenter.view.updateRecentRecipes(list)
+        }
     }
 
     private inner class FavoriteRecipeObserver : AbstractObserver<List<RecipeThumbnail>>() {

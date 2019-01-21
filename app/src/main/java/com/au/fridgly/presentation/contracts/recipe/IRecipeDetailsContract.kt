@@ -14,5 +14,6 @@ interface IRecipeDetailsContract {
         fun getRecipeDetails(idRecipe: Int)
         fun getIsFavorite(id: Int)
         fun postFavorite(recipe: RecipeDetails)
+        fun postHistorical(recipe: RecipeDetails)
     }
 }

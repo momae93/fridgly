@@ -5,11 +5,14 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.au.fridgly.data.local.models.FavoriteRecipeDB
+import com.au.fridgly.data.local.models.HistoricalRecipeDB
 import com.au.fridgly.data.local.services.IFavoriteService
+import com.au.fridgly.data.local.services.IHistoricalService
 
-@Database(entities = [FavoriteRecipeDB::class], version = 1)
+@Database(entities = [FavoriteRecipeDB::class, HistoricalRecipeDB::class], version = 1)
 abstract class AbstractDatabase: RoomDatabase() {
     abstract fun favoriteService(): IFavoriteService
+    abstract fun historicalService(): IHistoricalService
 
     companion object {
         private var INSTANCE: AbstractDatabase? = null

@@ -3,6 +3,7 @@ package com.au.fridgly.presentation.presenters.usecases.recipe
 import com.au.fridgly.domain.interactors.AbstractObserver
 import com.au.fridgly.domain.interactors.favorite.GetIsFavoriteRecipeById
 import com.au.fridgly.domain.interactors.favorite.InsertFavoriteRecipe
+import com.au.fridgly.domain.interactors.historical.InsertHistorical
 import com.au.fridgly.domain.interactors.search.GetRecipeDetailsById
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
@@ -16,14 +17,17 @@ class RecipeDetailsPresenter: IRecipeDetailsContract.Presenter {
     private var getRecipeDetailsById: GetRecipeDetailsById
     private var insertFavoriteRecipe : InsertFavoriteRecipe
     private var getIsFavoriteRecipeById : GetIsFavoriteRecipeById
-    private lateinit var recipeDetails: RecipeDetails
+    private var insertHistorical : InsertHistorical
+
 
     @Inject constructor(getRecipeDetailsById: GetRecipeDetailsById,
                         insertFavoriteRecipe : InsertFavoriteRecipe,
-                        getIsFavoriteRecipeById : GetIsFavoriteRecipeById){
+                        getIsFavoriteRecipeById : GetIsFavoriteRecipeById,
+                        insertHistorical : InsertHistorical){
         this.getRecipeDetailsById = getRecipeDetailsById
         this.insertFavoriteRecipe = insertFavoriteRecipe
         this.getIsFavoriteRecipeById = getIsFavoriteRecipeById
+        this.insertHistorical = insertHistorical
     }
 
     fun setView(view: IRecipeDetailsContract.View){
@@ -47,10 +51,16 @@ class RecipeDetailsPresenter: IRecipeDetailsContract.Presenter {
     }
 
     override fun postFavorite(recipe: RecipeDetails) {
-        recipeDetails = recipe
         val recipeThumbnail = RecipeThumbnail(id = recipe.id, image = recipe.image, name = recipe.name)
 
         return insertFavoriteRecipe.execute(PostFavoriteRecipeObserver(), InsertFavoriteRecipe
+            .Params(view.getViewActivity().applicationContext, recipeThumbnail))
+    }
+
+    override fun postHistorical(recipe: RecipeDetails) {
+        val recipeThumbnail = RecipeThumbnail(id = recipe.id, image = recipe.image, name = recipe.name)
+
+        return insertHistorical.execute(PostHistoricalRecipeObserver(), InsertHistorical
             .Params(view.getViewActivity().applicationContext, recipeThumbnail))
     }
 
@@ -92,6 +102,16 @@ class RecipeDetailsPresenter: IRecipeDetailsContract.Presenter {
 
         override fun onNext(t: Boolean) {
             this@RecipeDetailsPresenter.view.updateFavoriteIcon(t)
+        }
+    }
+
+    private inner class PostHistoricalRecipeObserver : AbstractObserver<Void>() {
+        override fun onComplete() {
+        }
+
+        override fun onError(e: Throwable) {
+            val message = "An error occured"
+            this@RecipeDetailsPresenter.view.showToast(message)
         }
     }
 }

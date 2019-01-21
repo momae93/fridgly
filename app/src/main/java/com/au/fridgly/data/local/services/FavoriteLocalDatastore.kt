@@ -1,6 +1,5 @@
 package com.au.fridgly.data.local.services
 
-import android.annotation.SuppressLint
 import android.content.Context
 import com.au.fridgly.data.datastore.IFavoriteDatastore
 import com.au.fridgly.data.local.AbstractDatabase

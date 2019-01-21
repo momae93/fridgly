@@ -4,6 +4,7 @@ import android.content.Context
 import com.au.fridgly.domain.executors.PostExecutionThread
 import com.au.fridgly.domain.executors.ThreadExecutor
 import com.au.fridgly.domain.repository.IFavoriteRepository
+import com.au.fridgly.domain.repository.IHistoricalRepository
 import com.au.fridgly.domain.repository.ISearchRepository
 import com.au.fridgly.presentation.internal.modules.ApplicationModule
 import com.au.fridgly.presentation.internal.modules.NetworkModule
@@ -22,4 +23,5 @@ interface ApplicationComponent {
 
     fun searchRepository(): ISearchRepository
     fun favoriteRepository(): IFavoriteRepository
+    fun historicalRepository(): IHistoricalRepository
 }

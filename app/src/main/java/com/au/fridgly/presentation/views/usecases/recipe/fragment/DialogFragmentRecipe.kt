@@ -131,6 +131,7 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
             Glide.with(activity!!).load(recipe.image).into(pictureImageView)
         }
         this.ingredientsRecyclerView.adapter = RecipeExtendedIngredientRecylerAdapter(recipe.ingredients, this)
+        this.presenter.postHistorical(recipe)
     }
 
     override fun updateFavoriteIcon(isFavorite: Boolean) {
