@@ -7,9 +7,12 @@ import com.au.fridgly.presentation.contracts.BaseView
 interface IRecipeDetailsContract {
     interface View: BaseView {
         fun updateRecipeDetails(recipe: RecipeDetails)
+        fun updateFavoriteIcon(isFavorite: Boolean)
     }
 
     interface Presenter: BasePresenter {
         fun getRecipeDetails(idRecipe: Int)
+        fun getIsFavorite(id: Int)
+        fun postFavorite(recipe: RecipeDetails)
     }
 }

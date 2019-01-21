@@ -3,7 +3,12 @@ package com.au.fridgly.presentation.views.usecases.search.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,10 +16,7 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
 
@@ -23,6 +25,7 @@ import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchContract
 import com.au.fridgly.presentation.contracts.search.ISearchResultContract
 import com.au.fridgly.presentation.presenters.usecases.search.SearchPresenter
+import com.au.fridgly.presentation.tensorflow.ImageClassifier
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailRecyclerAdapter
 import com.bumptech.glide.Glide
@@ -31,8 +34,13 @@ import javax.inject.Inject
 
 class FragmentSearch : Fragment(), ISearchContract.View {
 
+    private val REQUEST_IMAGE_CAPTURE = 1
+
     @BindView(R.id.fragment_search_searchView_search)
     lateinit var searchView: SearchView
+
+    @BindView(R.id.fragment_search_imageButton_scan)
+    lateinit var scanImageButton: ImageButton
 
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var presenter: SearchPresenter
@@ -70,6 +78,8 @@ class FragmentSearch : Fragment(), ISearchContract.View {
             }
         })
 
+        scanImageButton.setOnClickListener { dispatchTakePictureIntent() }
+
         return view
     }
 
@@ -82,6 +92,24 @@ class FragmentSearch : Fragment(), ISearchContract.View {
     }
 
     //endregion
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(activity?.packageManager)?.apply {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data.extras.get("data") as Bitmap
+            val classifier = ImageClassifier(activity!!)
+            val haha = classifier.classifyFrame(imageBitmap)
+            showToast("${imageBitmap.width} + ${imageBitmap.height}")
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

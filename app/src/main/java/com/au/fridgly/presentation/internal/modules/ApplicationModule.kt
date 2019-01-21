@@ -1,9 +1,11 @@
 package com.au.fridgly.presentation.internal.modules
 
 import android.content.Context
+import com.au.fridgly.data.repository.FavoriteDataRepository
 import com.au.fridgly.data.repository.SearchDataRepository
 import com.au.fridgly.domain.executors.PostExecutionThread
 import com.au.fridgly.domain.executors.ThreadExecutor
+import com.au.fridgly.domain.repository.IFavoriteRepository
 import com.au.fridgly.domain.repository.ISearchRepository
 import com.au.fridgly.presentation.AndroidApplication
 import com.au.fridgly.presentation.models.JobExecutor
@@ -37,5 +39,11 @@ class ApplicationModule(val application: AndroidApplication) {
     @Singleton
     fun provideSearchRepository(searchDataRepository: SearchDataRepository): ISearchRepository {
         return searchDataRepository
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(favoriteDataRepository: FavoriteDataRepository): IFavoriteRepository {
+        return favoriteDataRepository
     }
 }

@@ -34,6 +34,9 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
     @BindView(R.id.fragment_recipe_button_back)
     lateinit var backButton: ImageButton
 
+    @BindView(R.id.fragment_recipe_button_favorite)
+    lateinit var favoriteButton: ImageButton
+
     @BindView(R.id.fragment_recipe_textView_title)
     lateinit var titleTextView: TextView
 
@@ -59,6 +62,8 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
     lateinit var stepImageButton: ImageButton
 
     private lateinit var presenter: RecipeDetailsPresenter
+    private lateinit var recipeDetails: RecipeDetails
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +79,11 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
         (activity as MainActivity).getComponent().inject(this)
         ingredientsRecyclerView.layoutManager = LinearLayoutManager(context)
 
+        favoriteButton.setOnClickListener { this.presenter.postFavorite(recipeDetails) }
         backButton.setOnClickListener { this.dismiss() }
-        this.presenter.getRecipeDetails(idRecipe)
 
+        this.presenter.getRecipeDetails(idRecipe)
+        this.presenter.getIsFavorite(idRecipe)
         return view
     }
 
@@ -106,6 +113,7 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
 
 
     override fun updateRecipeDetails(recipe: RecipeDetails) {
+        this.recipeDetails = recipe
         this.titleTextView.text = recipe.name
         this.servingsTextView.text = recipe.servings.toString()
         this.readyTextView.text = "${recipe.ready} min"
@@ -123,6 +131,11 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
             Glide.with(activity!!).load(recipe.image).into(pictureImageView)
         }
         this.ingredientsRecyclerView.adapter = RecipeExtendedIngredientRecylerAdapter(recipe.ingredients, this)
+    }
+
+    override fun updateFavoriteIcon(isFavorite: Boolean) {
+        val drawable = if (isFavorite) R.drawable.ic_heart else R.drawable.ic_heart_empty
+        favoriteButton.setBackgroundResource(drawable)
     }
 
     override fun showToast(message: String) {
