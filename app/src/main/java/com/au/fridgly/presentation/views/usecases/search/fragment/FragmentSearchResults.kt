@@ -3,6 +3,7 @@ package com.au.fridgly.presentation.views.usecases.search.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.airbnb.lottie.LottieAnimationView
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchResultContract
@@ -28,6 +30,15 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
 
     @BindView(R.id.fragment_search_results_recyclerView_thumbnail)
     lateinit var thumbnailRecyclerView: RecyclerView
+
+    @BindView(R.id.fragment_search_results_group_loaded)
+    lateinit var loadedGroup: Group
+
+    @BindView(R.id.fragment_search_results_group_loading)
+    lateinit var loadingGroup: Group
+
+    @BindView(R.id.fragment_search_results_animation_loading)
+    lateinit var loadingAnimation: LottieAnimationView
 
     private lateinit var presenter: SearchResultPresenter
 
@@ -77,6 +88,19 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
 
     override fun updateThumbnails(list: List<RecipeThumbnail>) {
         thumbnailRecyclerView.adapter = RecipeThumbnailGridRecyclerAdapter(list, this)
+    }
+
+    override fun loading(isLoading: Boolean) {
+        if (isLoading){
+            loadingGroup.visibility = View.VISIBLE
+            loadedGroup.visibility = View.GONE
+            loadingAnimation.playAnimation()
+        }
+        else{
+            loadedGroup.visibility = View.VISIBLE
+            loadingGroup.visibility = View.GONE
+            loadingAnimation.cancelAnimation()
+        }
     }
 
     override fun showToast(message: String) {

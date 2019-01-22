@@ -6,6 +6,11 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+project.ext.ASSET_DIR = projectDir.toString() + '/src/main/assets'
+
+assert file(project.ext.ASSET_DIR + "/graph.tflite").exists()
+assert file(project.ext.ASSET_DIR + "/labels.txt").exists()
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -19,6 +24,16 @@ android {
         androidExtensions {
             experimental = true
         }
+    }
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+    repositories {
+        maven {
+            url 'https://google.bintray.com/tensorflow'
+        }
+        google()
     }
     buildTypes {
         release {
@@ -61,4 +76,11 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    def room_version = "1.1.1"
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    kapt "android.arch.persistence.room:compiler:$room_version"
+
+    implementation 'org.tensorflow:tensorflow-lite:1.12.0'
+    implementation 'com.airbnb.android:lottie:2.5.0'
 }

@@ -20,6 +20,7 @@ class SearchRandomPresenter: ISearchRandomContract.Presenter {
         }
 
         override fun getRandomRecipe(number: Int) {
+            this.view.loading(true)
             val key = "n9UfX4ANwYmshDzNDfneXaw7zrHDp1Z7ox1jsnBlCvCeH3l5SG"
             getRandomRecipes.execute(SearchRandomRecipeObserver(), GetRandomRecipes.Params(key, number))
         }
@@ -32,7 +33,9 @@ class SearchRandomPresenter: ISearchRandomContract.Presenter {
 
         private inner class SearchRandomRecipeObserver : AbstractObserver<List<RecipeThumbnail>>() {
 
-            override fun onComplete() {}
+            override fun onComplete() {
+                this@SearchRandomPresenter.view.loading(false)
+            }
 
             override fun onError(e: Throwable) {
                 val message = "An error occured"

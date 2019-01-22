@@ -2,7 +2,9 @@ package com.au.fridgly.presentation.views.usecases.search.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -15,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.airbnb.lottie.LottieAnimationView
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
@@ -36,6 +39,15 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
 
     @BindView(R.id.fragment_search_random_recyclerView_thumbnails)
     lateinit var thumbnailRecyclerView: RecyclerView
+
+    @BindView(R.id.fragment_search_random_group_loaded)
+    lateinit var loadedGroup: Group
+
+    @BindView(R.id.fragment_search_random_group_loading)
+    lateinit var loadingGroup: Group
+
+    @BindView(R.id.fragment_search_random_animation_loading)
+    lateinit var loadingAnimation: LottieAnimationView
 
     private lateinit var presenter: SearchRandomPresenter
 
@@ -81,7 +93,7 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
     override fun updateMainThumbnail(thumbnail: RecipeThumbnail) {
         thumbnail.apply {
             nameTextView.text = name
-            if (!image.isBlank()){
+            if (!image.isNullOrBlank()){
                 Glide.with(activity!!).load(image).into(pictureImageView)
                 pictureImageView.setOnClickListener {
                     (activity as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
@@ -92,6 +104,19 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
 
     override fun updateExtraThumbnail(list: List<RecipeThumbnail>) {
         thumbnailRecyclerView.adapter = RecipeThumbnailRecyclerAdapter(list, this)
+    }
+
+    override fun loading(isLoading: Boolean) {
+        if (isLoading){
+            loadingGroup.visibility = View.VISIBLE
+            loadedGroup.visibility = View.GONE
+            loadingAnimation.playAnimation()
+        }
+        else{
+            loadedGroup.visibility = View.VISIBLE
+            loadingGroup.visibility = View.GONE
+            loadingAnimation.cancelAnimation()
+        }
     }
 
     override fun showToast(message: String) {

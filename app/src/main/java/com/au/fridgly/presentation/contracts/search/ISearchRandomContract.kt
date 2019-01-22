@@ -8,6 +8,7 @@ interface ISearchRandomContract {
     interface View: BaseView {
         fun updateMainThumbnail(thumbnail: RecipeThumbnail)
         fun updateExtraThumbnail(list: List<RecipeThumbnail>)
+        fun loading(isLoading: Boolean)
     }
 
     interface Presenter: BasePresenter {
