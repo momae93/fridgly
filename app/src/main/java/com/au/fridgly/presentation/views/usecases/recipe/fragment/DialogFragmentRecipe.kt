@@ -126,7 +126,7 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
                 (activity as BaseActivity).showDialog(DialogFragmentStep.newInstance(ArrayList(steps)))
             }
         }
-        if (!recipe.image.isBlank()){
+        if (!recipe.image.isNullOrBlank()){
             Glide.with(activity!!).load(recipe.image).into(pictureImageView)
         }
         this.ingredientsRecyclerView.adapter = RecipeExtendedIngredientRecylerAdapter(recipe.ingredients, this)

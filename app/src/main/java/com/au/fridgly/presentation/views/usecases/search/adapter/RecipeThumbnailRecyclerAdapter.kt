@@ -28,7 +28,7 @@ class RecipeThumbnailRecyclerAdapter(val list: List<RecipeThumbnail>, val view: 
     override fun onBindViewHolder(holder: RecipeThumbnailViewholder, position: Int) {
         list[position].apply {
             holder.name.text = name
-            if (!image.isBlank()){
+            if (!image.isNullOrBlank()){
                 Glide.with(view.getViewActivity()).load(image).into(holder.image)
                 holder.image.setOnClickListener {
                     (view.getViewActivity() as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))

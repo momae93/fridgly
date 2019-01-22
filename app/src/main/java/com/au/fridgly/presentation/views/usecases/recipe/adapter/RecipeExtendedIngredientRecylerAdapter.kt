@@ -29,8 +29,12 @@ class RecipeExtendedIngredientRecylerAdapter(val list: List<ExtendedIngredient>,
             holder.quantity.text = amount.toString()
             holder.unit.text = unit
             val url = "https://spoonacular.com/cdn/ingredients_100x100/$image"
-            if (!image.isBlank()){
+            if (!image.isNullOrBlank()){
                 Glide.with(view.getViewActivity()).load(url).into(holder.picture)
+            }
+            else{
+                val drawable = view.getViewActivity().resources.getDrawable(R.drawable.al_missing)
+                holder.picture.setImageDrawable(drawable)
             }
         }
     }

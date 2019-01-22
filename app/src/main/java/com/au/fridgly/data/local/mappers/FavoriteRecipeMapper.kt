@@ -12,6 +12,6 @@ class FavoriteRecipeMapper @Inject constructor() {
     }
 
     fun transform(elt: RecipeThumbnail): FavoriteRecipeDB {
-        return FavoriteRecipeDB(elt.id, elt.name, elt.image)
+        return FavoriteRecipeDB(elt.id, elt.name, elt.image ?: "")
     }
 }

@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class EquipmentUI(val id: Int,
+data class EquipmentUI(val id: Int?,
                        val name: String,
-                       val image: String) : Parcelable
+                       val image: String?) : Parcelable

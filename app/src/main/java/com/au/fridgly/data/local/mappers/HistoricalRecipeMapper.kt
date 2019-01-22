@@ -13,6 +13,6 @@ class HistoricalRecipeMapper @Inject constructor() {
     }
 
     fun transform(elt: RecipeThumbnail): HistoricalRecipeDB {
-        return HistoricalRecipeDB(id = elt.id, name = elt.name, image = elt.image, date = Date().time)
+        return HistoricalRecipeDB(id = elt.id, name = elt.name, image = elt.image ?: "", date = Date().time)
     }
 }
