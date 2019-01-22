@@ -4,6 +4,7 @@ import com.au.fridgly.presentation.internal.modules.ActivityModule
 import com.au.fridgly.presentation.internal.scopes.PerActivity
 import com.au.fridgly.presentation.views.usecases.favorite.FragmentFavorite
 import com.au.fridgly.presentation.views.usecases.recipe.fragment.DialogFragmentRecipe
+import com.au.fridgly.presentation.views.usecases.scan.fragment.FragmentScanResult
 import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearch
 import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearchRandom
 import com.au.fridgly.presentation.views.usecases.search.fragment.FragmentSearchResults
@@ -16,6 +17,7 @@ interface MainActivityComponent : ActivityComponent{
     fun inject(fragmentSearchRandom: FragmentSearchRandom)
     fun inject(fragmentSearchResults: FragmentSearchResults)
     fun inject(fragmentFavorite: FragmentFavorite)
+    fun inject(fragmentScanResult: FragmentScanResult)
 
     fun inject(dialogFragmentRecipe: DialogFragmentRecipe)
 }

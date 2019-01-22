@@ -64,7 +64,6 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
     private lateinit var presenter: RecipeDetailsPresenter
     private lateinit var recipeDetails: RecipeDetails
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogStyle)

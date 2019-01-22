@@ -11,6 +11,5 @@ interface IRecipeStepContract {
         fun previousStep()
     }
 
-    interface Presenter: BasePresenter {
-    }
+    interface Presenter: BasePresenter
 }
