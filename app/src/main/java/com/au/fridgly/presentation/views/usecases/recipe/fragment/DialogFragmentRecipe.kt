@@ -15,6 +15,7 @@ import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.presentation.contracts.recipe.IRecipeDetailsContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.models.recipeDetails.StepUI
 import com.au.fridgly.presentation.presenters.helpers.RecipeDetailsMapper
 import com.au.fridgly.presentation.presenters.usecases.recipe.RecipeDetailsPresenter
@@ -144,6 +145,9 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
 
     override fun getViewActivity(): Activity {
         return activity!!
+    }
+
+    override fun handleState(state: EState) {
     }
 
     companion object {

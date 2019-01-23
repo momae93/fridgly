@@ -1,17 +1,19 @@
 package com.au.fridgly.presentation.views.usecases.search.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
@@ -21,29 +23,14 @@ import butterknife.BindView
 import butterknife.ButterKnife
 
 import com.au.fridgly.R
-import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchContract
-import com.au.fridgly.presentation.contracts.search.ISearchResultContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.presenters.usecases.search.SearchPresenter
-import com.au.fridgly.presentation.tensorflow.Classifier
-import com.au.fridgly.presentation.tensorflow.ImageClassifier
-import com.au.fridgly.presentation.views.usecases.BaseActivity
 import com.au.fridgly.presentation.views.usecases.MainActivity
-import com.au.fridgly.presentation.views.usecases.scan.fragment.FragmentScanResult
-import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailRecyclerAdapter
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.abc_activity_chooser_view.*
-import java.util.ArrayList
 import javax.inject.Inject
 
 
 class FragmentSearch : Fragment(), ISearchContract.View {
-
-    private val mInputSize = 224
-    private lateinit var mBitmap: Bitmap
-
-    private val mModelPath = "graph.tflite"
-    private val mLabelPath = "labels.txt"
 
     private val REQUEST_IMAGE_CAPTURE = 1
 
@@ -90,12 +77,43 @@ class FragmentSearch : Fragment(), ISearchContract.View {
         })
 
         scanImageButton.setOnClickListener {
-            val list = listOf("tomato", "apple", "pineapple")
-            (activity as BaseActivity).showDialog(FragmentScanResult.newInstance(ArrayList(list)))
+            takePicture()
         }
-        //scanImageButton.setOnClickListener { dispatchTakePictureIntent() }
 
         return view
+    }
+
+    private fun takePicture() {
+        when (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA)) {
+            PackageManager.PERMISSION_GRANTED -> {
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                    takePictureIntent.resolveActivity(activity?.packageManager)?.apply {
+                        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                    }
+                }
+            }
+            PackageManager.PERMISSION_DENIED -> {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                    val message = "Your camera is required for the scan"
+                    showToast(message)
+                }
+                ActivityCompat.requestPermissions(
+                    activity!!,
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_IMAGE_CAPTURE
+                )
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (permissions[0] == Manifest.permission.CAMERA && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val message = "Thanks for accepting !"
+                showToast(message)
+            }
+        }
     }
 
     //region Inject Fields
@@ -108,22 +126,12 @@ class FragmentSearch : Fragment(), ISearchContract.View {
 
     //endregion
 
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(activity?.packageManager)?.apply {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && data != null){
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                val imageBitmap = data.extras.get("data") as Bitmap
+                this.presenter.analyzeBitmap(imageBitmap)
             }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            var imageBitmap = data.extras.get("data") as Bitmap
-            imageBitmap = Bitmap.createScaledBitmap(imageBitmap, mInputSize, mInputSize, false)
-            val mClassifier = Classifier(activity!!.assets, mModelPath, mLabelPath, mInputSize)
-            val value = mClassifier.recognizeImage(imageBitmap).firstOrNull()
-            showToast(value?.title!!)
         }
     }
 
@@ -146,6 +154,10 @@ class FragmentSearch : Fragment(), ISearchContract.View {
     override fun getViewActivity(): Activity {
         return activity!!
     }
+
+    override fun handleState(state: EState) {
+    }
+
 
     interface OnFragmentInteractionListener
 }

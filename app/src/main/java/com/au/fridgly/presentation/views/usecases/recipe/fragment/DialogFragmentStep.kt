@@ -19,6 +19,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.presentation.contracts.recipe.IRecipeStepContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.models.recipeDetails.StepUI
 import com.au.fridgly.presentation.views.usecases.recipe.adapter.RecipeEquipmentRecyclerAdapter
 import com.au.fridgly.presentation.views.usecases.recipe.adapter.RecipeIngredientRecyclerAdapter
@@ -123,6 +124,9 @@ class DialogFragmentStep : DialogFragment(), IRecipeStepContract.View {
 
     override fun getViewActivity(): Activity {
         return activity!!
+    }
+
+    override fun handleState(state: EState) {
     }
 
     override fun previousStep(){

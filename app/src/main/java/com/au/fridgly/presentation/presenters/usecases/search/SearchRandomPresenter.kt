@@ -4,6 +4,7 @@ import com.au.fridgly.domain.interactors.AbstractObserver
 import com.au.fridgly.domain.interactors.search.GetRandomRecipes
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchRandomContract
+import com.au.fridgly.presentation.models.EState
 import javax.inject.Inject
 
 class SearchRandomPresenter: ISearchRandomContract.Presenter {
@@ -20,7 +21,7 @@ class SearchRandomPresenter: ISearchRandomContract.Presenter {
         }
 
         override fun getRandomRecipe(number: Int) {
-            this.view.loading(true)
+            this@SearchRandomPresenter.view.handleState(EState.LOADING)
             val key = "n9UfX4ANwYmshDzNDfneXaw7zrHDp1Z7ox1jsnBlCvCeH3l5SG"
             getRandomRecipes.execute(SearchRandomRecipeObserver(), GetRandomRecipes.Params(key, number))
         }
@@ -34,12 +35,11 @@ class SearchRandomPresenter: ISearchRandomContract.Presenter {
         private inner class SearchRandomRecipeObserver : AbstractObserver<List<RecipeThumbnail>>() {
 
             override fun onComplete() {
-                this@SearchRandomPresenter.view.loading(false)
+                this@SearchRandomPresenter.view.handleState(EState.LOADED)
             }
 
             override fun onError(e: Throwable) {
-                val message = "An error occured"
-                this@SearchRandomPresenter.view.showToast(message)
+                this@SearchRandomPresenter.view.handleState(EState.ERROR)
             }
 
             override fun onNext(list: List<RecipeThumbnail>) {

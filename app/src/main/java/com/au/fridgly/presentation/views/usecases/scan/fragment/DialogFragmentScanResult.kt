@@ -18,6 +18,7 @@ import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.EAliment
 import com.au.fridgly.presentation.contracts.scan.IScanResultContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.presenters.usecases.scan.ScanResultPresenter
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.scan.adapter.AlimentRecyclerAdapter
@@ -95,6 +96,9 @@ class FragmentScanResult : DialogFragment(), IScanResultContract.View {
 
     override fun getViewActivity(): Activity {
         return activity!!
+    }
+
+    override fun handleState(state: EState) {
     }
 
     override fun onAttach(context: Context) {

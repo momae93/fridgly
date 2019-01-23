@@ -17,6 +17,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchResultContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.presenters.usecases.search.SearchResultPresenter
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailGridRecyclerAdapter
@@ -109,6 +110,9 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
 
     override fun getViewActivity(): Activity {
         return activity!!
+    }
+
+    override fun handleState(state: EState) {
     }
 
     interface OnFragmentInteractionListener

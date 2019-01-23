@@ -8,12 +8,12 @@ import android.view.inputmethod.InputMethodManager
 import com.au.fridgly.presentation.AndroidApplication
 import com.au.fridgly.presentation.internal.components.ApplicationComponent
 import com.au.fridgly.presentation.internal.modules.ActivityModule
+import com.au.fridgly.presentation.views.helpers.ConnectionManager
 
 abstract class BaseActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //this.getApplicationComponent().inject(this)
     }
 
     fun replaceFragment(containerViewId: Int, fragment: android.support.v4.app.Fragment) {
@@ -33,6 +33,11 @@ abstract class BaseActivity : FragmentActivity() {
     fun showDialog(dialogFragment: DialogFragment){
         dialogFragment.show(this.supportFragmentManager, "DialogProfileTagsAll")
         this.supportFragmentManager?.executePendingTransactions()
+    }
+
+    fun checkInternetConnection(): Boolean{
+        val connectionManager = ConnectionManager(this.baseContext)
+        return connectionManager.isOnline()
     }
 
     fun closeKeyboard(){

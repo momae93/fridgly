@@ -16,6 +16,7 @@ import butterknife.ButterKnife
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.favorite.IFavoriteContract
+import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.presenters.usecases.favorite.FavoritePresenter
 import com.au.fridgly.presentation.presenters.usecases.search.SearchResultPresenter
 import com.au.fridgly.presentation.views.usecases.MainActivity
@@ -80,6 +81,9 @@ class FragmentFavorite : Fragment(), IFavoriteContract.View {
 
     override fun getViewActivity(): Activity {
         return activity!!
+    }
+
+    override fun handleState(state: EState) {
     }
 
     override fun onAttach(context: Context) {
