@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -19,6 +20,7 @@ import com.au.fridgly.domain.models.RecipeThumbnail
 import com.au.fridgly.presentation.contracts.search.ISearchResultContract
 import com.au.fridgly.presentation.models.EState
 import com.au.fridgly.presentation.presenters.usecases.search.SearchResultPresenter
+import com.au.fridgly.presentation.views.usecases.BaseActivity
 import com.au.fridgly.presentation.views.usecases.MainActivity
 import com.au.fridgly.presentation.views.usecases.search.adapter.RecipeThumbnailGridRecyclerAdapter
 import javax.inject.Inject
@@ -38,6 +40,15 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
     @BindView(R.id.fragment_search_results_group_loading)
     lateinit var loadingGroup: Group
 
+    @BindView(R.id.fragment_search_results_group_no_internet)
+    lateinit var noInternetGroup: Group
+
+    @BindView(R.id.fragment_search_results_group_error)
+    lateinit var errorGroup: Group
+
+    @BindView(R.id.fragment_search_results_button_refresh)
+    lateinit var refreshButton: Button
+
     @BindView(R.id.fragment_search_results_animation_loading)
     lateinit var loadingAnimation: LottieAnimationView
 
@@ -51,16 +62,13 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_search_results, container, false)
+        val view= inflater.inflate(R.layout.fragment_search_results, container, false)
         (activity as MainActivity).getComponent().inject(this)
         ButterKnife.bind(this, view)
         thumbnailRecyclerView.layoutManager = GridLayoutManager(context, 2)
         thumbnailRecyclerView.setHasFixedSize(true)
 
-        if (!query.isBlank())
-            this.presenter.getSearchRecipes(100, query)
-        else
-            showToast("It's empty!")
+        getSearchRecipes()
 
         return view
     }
@@ -91,17 +99,21 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
         thumbnailRecyclerView.adapter = RecipeThumbnailGridRecyclerAdapter(list, this)
     }
 
-    override fun loading(isLoading: Boolean) {
-        if (isLoading){
-            loadingGroup.visibility = View.VISIBLE
-            loadedGroup.visibility = View.GONE
-            loadingAnimation.playAnimation()
+    override fun getSearchRecipes() {
+        if (checkConnection()){
+            if (!query.isBlank())
+                this.presenter.getSearchRecipes(100, query)
+            else
+                showToast("It's empty!")
         }
-        else{
-            loadedGroup.visibility = View.VISIBLE
-            loadingGroup.visibility = View.GONE
-            loadingAnimation.cancelAnimation()
+    }
+
+    override fun checkConnection(): Boolean {
+        if (!(activity as BaseActivity).checkInternetConnection()){
+            this.handleState(EState.NO_INTERNET)
+            return false
         }
+        return true
     }
 
     override fun showToast(message: String) {
@@ -113,6 +125,31 @@ class FragmentSearchResults : Fragment(), ISearchResultContract.View {
     }
 
     override fun handleState(state: EState) {
+        loadedGroup.visibility = View.GONE
+        loadingGroup.visibility = View.GONE
+        noInternetGroup.visibility = View.GONE
+        errorGroup.visibility = View.GONE
+        refreshButton.visibility = View.GONE
+        when (state){
+            EState.LOADED -> {
+                loadedGroup.visibility = View.VISIBLE
+                loadingAnimation.cancelAnimation()
+            }
+            EState.LOADING -> {
+                loadingGroup.visibility = View.VISIBLE
+                loadingAnimation.playAnimation()
+            }
+            EState.NO_INTERNET -> {
+                noInternetGroup.visibility = View.VISIBLE
+                refreshButton.visibility = View.VISIBLE
+                refreshButton.setOnClickListener { this.getSearchRecipes() }
+            }
+            EState.ERROR -> {
+                errorGroup.visibility = View.VISIBLE
+                refreshButton.visibility = View.VISIBLE
+                refreshButton.setOnClickListener { this.getSearchRecipes() }
+            }
+        }
     }
 
     interface OnFragmentInteractionListener

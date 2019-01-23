@@ -7,7 +7,8 @@ import com.au.fridgly.presentation.contracts.BaseView
 interface ISearchResultContract {
     interface View: BaseView {
         fun updateThumbnails(list: List<RecipeThumbnail>)
-        fun loading(isLoading: Boolean)
+        fun getSearchRecipes()
+        fun checkConnection(): Boolean
     }
 
     interface Presenter: BasePresenter {

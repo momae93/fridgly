@@ -26,8 +26,76 @@
             app:layout_constraintEnd_toEndOf="parent" android:id="@+id/fragment_search_results_recyclerView_thumbnail"/>
     <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:id="@+id/fragment_search_results_group_loaded"
-                                      app:constraint_referenced_ids="fragment_search_results_recyclerView_thumbnail"/>
+                                      app:constraint_referenced_ids="fragment_search_results_recyclerView_thumbnail"
+                                      android:visibility="gone"/>
     <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:id="@+id/fragment_search_results_group_loading"
-                                      app:constraint_referenced_ids="fragment_search_results_animation_loading"/>
+                                      app:constraint_referenced_ids="fragment_search_results_animation_loading"
+                                      android:visibility="gone"/>
+
+    <TextView
+            android:text="Looks like you don't have internet ? :("
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_search_results_textView_internet" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_search_results_guideline_middle"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold" android:textColor="@color/colorPink"/>
+    <ImageView
+            android:background="@drawable/ic_campfire"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/fragment_search_results_imageView_internet" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_search_results_guideline_middle"/>
+    <ImageView
+            android:background="@drawable/ic_broken_heart"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/fragment_search_results_imageView_error" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_search_results_animation_loading"
+            android:layout_marginBottom="8dp"/>
+    <TextView
+            android:text="Sorry an error occured :("
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_search_results_textView_error" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fragment_search_results_textView_internet" android:textStyle="bold"
+            android:textColor="@color/colorPink"/>
+
+    <Button
+            android:text="TRY AGAIN"
+            android:background="@android:color/transparent"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_search_results_button_refresh" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:textSize="14sp" android:textStyle="bold" android:textColor="@color/colorBlue"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_search_results_textView_internet"
+            android:visibility="gone"/>
+
+    <android.support.constraint.Guideline
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/fragment_search_results_guideline_middle"
+            app:layout_constraintGuide_percent="0.5"/>
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:id="@+id/fragment_search_results_group_error"
+                                      app:constraint_referenced_ids="fragment_search_results_textView_error,fragment_search_results_imageView_error"
+                                      android:visibility="gone"/>
+    <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                      android:id="@+id/fragment_search_results_group_no_internet"
+                                      app:constraint_referenced_ids="fragment_search_results_textView_internet,fragment_search_results_imageView_internet"
+                                      android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>
