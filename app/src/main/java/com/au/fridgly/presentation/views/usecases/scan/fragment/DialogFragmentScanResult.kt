@@ -39,6 +39,9 @@ class FragmentScanResult : DialogFragment(), IScanResultContract.View {
     @BindView(R.id.fragment_scan_recyclerView_extra)
     lateinit var extraRecyclerView: RecyclerView
 
+    @BindView(R.id.fragment_scan_button_back)
+    lateinit var backButton: ImageView
+
     private lateinit var aliments: List<String>
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var presenter: ScanResultPresenter
@@ -60,7 +63,7 @@ class FragmentScanResult : DialogFragment(), IScanResultContract.View {
         extraRecyclerView.setHasFixedSize(true)
 
         this.presenter.getAliments(aliments)
-
+        backButton.setOnClickListener { this.dismiss() }
         return view
     }
 

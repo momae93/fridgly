@@ -105,11 +105,14 @@ class FragmentSearchRandom : Fragment(), ISearchRandomContract.View {
 
     override fun updateMainThumbnail(thumbnail: RecipeThumbnail) {
         thumbnail.apply {
-            nameTextView.text = name
-            if (!image.isNullOrBlank()){
-                Glide.with(activity!!).load(image).into(pictureImageView)
-                pictureImageView.setOnClickListener {
-                    (activity as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
+            if (isAdded){
+
+                nameTextView.text = name
+                if (!image.isNullOrBlank()){
+                    Glide.with(activity!!).load(image).into(pictureImageView)
+                    pictureImageView.setOnClickListener {
+                        (activity as BaseActivity).showDialog(DialogFragmentRecipe.newInstance(id))
+                    }
                 }
             }
         }

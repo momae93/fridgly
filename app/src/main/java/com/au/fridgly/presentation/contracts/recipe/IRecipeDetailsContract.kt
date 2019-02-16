@@ -8,6 +8,8 @@ interface IRecipeDetailsContract {
     interface View: BaseView {
         fun updateRecipeDetails(recipe: RecipeDetails)
         fun updateFavoriteIcon(isFavorite: Boolean)
+        fun getRecipeDetails()
+        fun checkConnection(): Boolean
     }
 
     interface Presenter: BasePresenter {

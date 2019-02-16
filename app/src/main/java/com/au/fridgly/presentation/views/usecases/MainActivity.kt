@@ -54,6 +54,8 @@ class MainActivity : BaseActivity() {
     }
 
     fun getComponent(): MainActivityComponent {
+        if (component == null)
+            recreate()
         return component
     }
 

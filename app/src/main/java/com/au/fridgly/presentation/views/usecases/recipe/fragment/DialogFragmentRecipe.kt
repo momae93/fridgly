@@ -3,6 +3,7 @@ package com.au.fridgly.presentation.views.usecases.recipe.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.support.constraint.Group
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import butterknife.BindView
 import butterknife.ButterKnife
+import com.airbnb.lottie.LottieAnimationView
 import com.au.fridgly.R
 import com.au.fridgly.domain.models.recipeDetails.RecipeDetails
 import com.au.fridgly.presentation.contracts.recipe.IRecipeDetailsContract
@@ -62,6 +64,24 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
     @BindView(R.id.fragment_recipe_imageButton_steps)
     lateinit var stepImageButton: ImageButton
 
+    @BindView(R.id.fragment_recipe_group_loaded)
+    lateinit var loadedGroup: Group
+
+    @BindView(R.id.fragment_recipe_group_loading)
+    lateinit var loadingGroup: Group
+
+    @BindView(R.id.fragment_recipe_group_no_internet)
+    lateinit var noInternetGroup: Group
+
+    @BindView(R.id.fragment_recipe_group_error)
+    lateinit var errorGroup: Group
+
+    @BindView(R.id.fragment_recipe_button_refresh)
+    lateinit var refreshButton: Button
+
+    @BindView(R.id.fragment_recipe_animation_loading)
+    lateinit var loadingAnimation: LottieAnimationView
+
     private lateinit var presenter: RecipeDetailsPresenter
     private lateinit var recipeDetails: RecipeDetails
 
@@ -82,7 +102,7 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
         favoriteButton.setOnClickListener { this.presenter.postFavorite(recipeDetails) }
         backButton.setOnClickListener { this.dismiss() }
 
-        this.presenter.getRecipeDetails(idRecipe)
+        this.getRecipeDetails()
         this.presenter.getIsFavorite(idRecipe)
         return view
     }
@@ -139,6 +159,19 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
         favoriteButton.setBackgroundResource(drawable)
     }
 
+    override fun getRecipeDetails() {
+        if (checkConnection())
+            this.presenter.getRecipeDetails(idRecipe)
+    }
+
+    override fun checkConnection(): Boolean {
+        if (!(activity as BaseActivity).checkInternetConnection()) {
+            this.handleState(EState.NO_INTERNET)
+            return false
+        }
+        return true
+    }
+
     override fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
@@ -148,6 +181,31 @@ class DialogFragmentRecipe : DialogFragment(), IRecipeDetailsContract.View {
     }
 
     override fun handleState(state: EState) {
+        loadedGroup.visibility = View.GONE
+        loadingGroup.visibility = View.GONE
+        noInternetGroup.visibility = View.GONE
+        errorGroup.visibility = View.GONE
+        refreshButton.visibility = View.GONE
+        when (state){
+            EState.LOADED -> {
+                loadedGroup.visibility = View.VISIBLE
+                loadingAnimation.cancelAnimation()
+            }
+            EState.LOADING -> {
+                loadingGroup.visibility = View.VISIBLE
+                loadingAnimation.playAnimation()
+            }
+            EState.NO_INTERNET -> {
+                noInternetGroup.visibility = View.VISIBLE
+                refreshButton.visibility = View.VISIBLE
+                refreshButton.setOnClickListener { this.getRecipeDetails() }
+            }
+            EState.ERROR -> {
+                errorGroup.visibility = View.VISIBLE
+                refreshButton.visibility = View.VISIBLE
+                refreshButton.setOnClickListener { this.getRecipeDetails() }
+            }
+        }
     }
 
     companion object {
